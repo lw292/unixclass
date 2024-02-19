@@ -69,7 +69,6 @@ ls [/path/to/directory]
 > ls data/sample
 > ls -la data/sample
 > ls -lah /workspace/unix/data/sample
-> ls -lahr /workspace/unix/data/sample
 > ```
 
 ![Command](./images/command.jpg)
@@ -77,13 +76,13 @@ ls [/path/to/directory]
 > [!TIP]
 > **Relative path** starts from the present working directory. For example, suppose we are currently in `/workspace/unixclass/data`:
 > ```
-> my_file.csv # => /workspace/unixclass/data/my_file.csv
-> sample/my_file.csv # => /workspace/unixclass/data/sample/my_file.csv
+> my_file.txt # => /workspace/unixclass/data/my_file.txt
+> sample/my_file.txt # => /workspace/unixclass/data/sample/my_file.txt
 > ```
 > **Absolute path** starts from the root directory, so it always starts with `/`:
 > ```
-> /workspace/unixclass/my_file.csv
-> /workspace/unixclass/data/my_file.csv
+> /workspace/unixclass/my_file.txt
+> /workspace/unixclass/data/my_file.txt
 > ```
 
 > [!TIP]
@@ -91,13 +90,13 @@ ls [/path/to/directory]
 > **Forward slash** `/` denotes the root directory at the beginning of a path, and is the element delimiter in the middle of a path:
 > ```
 > / # Root directory
-> data/my_file.csv # Delimits the directory name "data" from the file name "my_file.csv"
-> /workspace/unixclass/data/my_file.csv # The first slash denotes the root directory, and the subsequent ones delimit path elements
+> data/my_file.txt # Delimits the directory name "data" from the file name "my_file.txt"
+> /workspace/unixclass/data/my_file.txt # The first slash denotes the root directory, and the subsequent ones delimit path elements
 > ```
-> A **single dot** `.` represents the present working directory, and **double dots** `..` represent the parent directory of the present working directory. Assume we are currently in `/workspace/unixclass/data`:
+> A **single dot** `.` represents the present working directory, and **double dots** `..` represent the parent directory of the present working directory. Assume we are currently in `/workspace/unixclass/data/sample`:
 > ```
-> ./my_file.csv # => my_file.csv => /workspace/unixclass/data/my_file.csv
-> ../README.md # => /workspace/unixclass/README.md
+> ./my_file.txt # => my_file.txt => /workspace/unixclass/data/sample/my_file.txt
+> ../my_file.txt # => /workspace/unixclass/data/my_file.txt
 > ```
 > Sometimes you may also encounter the **tilde** character `~`, which in most Unix systems denote the user's "home directory".
 
@@ -141,9 +140,9 @@ cp [/path/to/source] [/path/to/destination]
 ```
 For example:
 ```
-cp data/my_file.csv data/sample_1/my_file.csv
-cp data/my_file.csv data/sample_1/
-cp data/my_file.csv data/sample_1/my_file_copy.csv # copy to new location with a new name
+cp data/my_file.txt data/sample_1/my_file.txt
+cp data/my_file.txt data/sample_2/
+cp data/my_file.txt data/sample_3/my_file_copy.txt # copy to new location with a new name
 ```
 
 To **copy a directory** with its contents, use `cp` with the `-R` (recursive) (or sometimes `-r` also works) flag:
@@ -157,14 +156,15 @@ mv [/path/to/source] [/path/to/destination]
 ```
 For example:
 ```
-mv data/my_file.csv data/sample_4/my_file.csv
-mv data/my_file.csv data/sample_4/
-mv data/my_file.csv data/sample_4/my_file_new.csv # move to new location with a new name
+mkdir -p data/sample_5 data/sample_6 data/sample_7
+mv data/my_file.txt data/sample_5/my_file.txt
+mv data/sample_5/my_file.txt data/sample_6/
+mv data/sample_6/my_file.txt data/sample_7/my_file_new.txt # move to new location with a new name
 ```
 When using `mv` in the same location, it is effectively **renaming** the file or directory:
 ```
-mv data/my_file.csv data/my_file_backup.csv
-mv data/sample_1 data/sample_5
+mv data/sample_5/my_file.txt data/sample_5/my_file_backup.txt
+mv data/sample_7 data/sample_8
 ```
 
 To **remove** files, use:
@@ -173,7 +173,7 @@ rm [/path/to/file]
 ```
 For example:
 ```
-rm data/sample/my_file.csv
+rm data/sample_3/my_file.txt
 ```
 To **remove** a directory together with its contents, use `rm` with the `-R` (recursive) (or sometimes `-r` also works) flag:
 ```
@@ -187,11 +187,11 @@ rm -R data/sample_5
 > **Special Characters**. 
 > The **question mark** `?` is a wildcard character that denotes one character when specifying file names:
 > ```
-> cp data/sample/my_file_?.csv data/sample_1/ # => my_file_1.csv, my_file_2.csv, ...
+> cp data/sample/my_file_?.txt data/sample_1/ # => my_file_1.txt, my_file_2.txt, ...
 > ```
 > The **asterisk** `*` is a wildcard character that denotes any number of characters when specifying file names:
 > ```
-> cp data/sample/*.csv data/sample_1/ # => my_file.csv, another_file.csv, yet_another_file.csv, ...
+> cp data/sample/*.txt data/sample_1/ # => my_file.txt, another_file.txt, yet_another_file.txt, ...
 > ```
 
 <br/>
@@ -306,9 +306,10 @@ tail covid.txt
 > ```
 > head -n 100 covid.csv # display the first 100 lines
 > tail -n 50 covid.csv # display the last 50 lines
+> tail -n +2 covid.csv # display all lines except the first line
 > ```
 
-If the file is large, and you want to search its content, `grep` is a very powerful tool. For example:
+If the file is large, and you want to **search** its content, `grep` is a very powerful tool. For example:
 ```
 grep 'sweet' shakespeare.txt # find all instances of the word 'sweet'
 grep –i 'sweet' shakespeare.txt # same as above but case-insensitive
@@ -419,7 +420,7 @@ COUNTER=0
 for datafile in covid*.csv
 do
 	echo "Adding $datafile …"
-	tail -n +2 $datafile >> combined-covid.csv
+	tail -n +2 $datafile | sort -r | cut -d , -f 2,3,4,5 >> combined-covid.csv
 	COUNTER=$((COUNTER + 1))
 done
 
