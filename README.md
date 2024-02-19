@@ -281,7 +281,7 @@ more shakespeare.txt
 ```
 
 > [!TIP]
-> With `more`, you can use the spacebar to **scroll** pages and type in `:q` to **quit** the interface.
+> With `more`, you can use the spacebar to **scroll** pages and type in `q` to **quit** the interface.
 
 For large tabular data files, we might just want to look at the **first a few rows** to get a sense of the data. We can use the `head` command to achieve that:
 ```
@@ -298,7 +298,7 @@ tail [/path/to/file]
 ```
 For example:
 ```
-tail covid.txt
+tail covid.csv
 ```
 
 > [!TIP]
@@ -321,7 +321,7 @@ grep –ic 'sweet' shakespeare.txt # only returns a count
 
 ## How to Get Help
 
-We cannot possibly list all Unix commands in this tutorial, as there are so many of them, and they vary from system to system. However, you can learn how to use almost any command yourself. Arguably the most important command you should know is the `man` command. It prints the **manual** of a specified command, allowing you to find out exactly what a command does, what options are available, and what syntax you should follow.
+We cannot possibly list all commands in this tutorial, as there are so many of them, and they vary from system to system. However, you can learn how to use almost any command yourself. Arguably the most important command you should know is the `man` command. It prints the **manual** of the specified command, allowing you to learn exactly what a command does, what options are available, and what syntax to follow.
 ```
 man command_name
 ```
@@ -331,15 +331,15 @@ man ls
 ```
 Here we can see a brief description of the command, the general syntax, and what each option does.
 
-Sometimes (not always), commands may have the `--help` or `-h` option built in, which may give you more information on how to use these commands.
+Sometimes (but not always), commands may have the `--help` or `-h` option built in, which may give you more information on how to use these commands.
 
-Of course, you can also use the good old search engine and a trusted site to find the answer to any questions you may have.
+Of course, you can also use the good old search engine or a trusted site to find the answer to any questions you may have.
 
 <br/>
 
 ## Directing Command Output
 
-If we do not specify a location, the default output for most commands is the `STDOUT` (standard output), which is typically the terminal itself. For example, if we want to print out the string 'Hello world', we can use the `echo` command:
+If we do not specify a location, the default output for most commands is `STDOUT` (standard output), which is typically the terminal itself. For example, if we want to print out the string 'Hello world', we can use the `echo` command:
 ```
 echo 'Hello world'
 ```
@@ -356,7 +356,7 @@ echo 'Hello world!' > hello.txt
 echo ' So happy to be here!' >> hello.txt
 ```
 
-The **single chevron** `>` replaces the existing content of the target file with the output of the command. This can make sense in a lot of situations, but you have to extra careful not overwriting any file that you don't intend to overwrite. Again, the terminal usually does not ask you for confirmation.
+The **single chevron** `>` replaces the existing content of the target file with the output of the command. This can make sense in a lot of situations, but you have to be extra careful not overwriting any file that you don't intend to overwrite. Again, the terminal usually does not ask you for confirmation.
 
 The **double chevron** `>>`, on the other hand, appends the output of the command to the end of the target file. This is useful if you want to sequentially write content to a file, such as a log file.
 
@@ -380,9 +380,10 @@ head -n 100 covid.csv | tail
 
 ## Getting Started with Shell Scripting
 
-The real power of the terminal command line is shell scripting, otherwise we would all just be using GUI based apps! Scripting allows us to string commands together and automate certain tasks not possible with GUI based applications.
+The real power of the command line is shell scripting. Otherwise we would all just be using GUI-based apps! Scripting allows us to string commands together and automate certain tasks not possible with GUI-based applications.
 
-To learn scripting, why don't we start with an exercise. Based on what we have learned today, what do the following commands do?
+To learn shell scripting, let's start with an exercise. Based on what we have learned today, what do the following commands do?
+
 ```
 cat shakespeare.txt | tr -sc [:alpha:] '\n' | sort -f | uniq -ci | sort -bnfr > results-shakespeare.txt
 ```
@@ -391,9 +392,9 @@ cat shakespeare.txt | tr -sc [:alpha:] '\n' | sort -f | uniq -ci | sort -bnfr > 
 head -n 101 covid.csv | tail -n 100 | sort -r | cut -d , -f 2,3,4,5 > results-covid.txt
 ```
 
-Now that we know what these commands do, let's put them in a file so that we never have to type in such a long command again! You can use commands like `nano`, or your favorite text editor to create a file with this content.
+Now that we know what these commands do, let's put them in a file so that we never have to type in such long commands again! You can use `nano`, or your favorite text editors, to create these script files.
 
-Let's create a file called `top_ten`:
+Let's create a script file called `top_ten`:
 ```
 #! /bin/bash
 
@@ -409,7 +410,7 @@ head results-${file}
 date
 ```
 
-Additionally, let's create a file called `combine_data`
+Additionally, let's create another script file called `combine_data`
 ```
 #! /bin/bash
 
@@ -427,16 +428,15 @@ done
 echo "All set. $COUNTER files were added."
 
 date
-
 ```
 
 <br/>
 
 ## Permission System
 
-Now that we have some scripts, we need to be able to run them as commands. However, if you try to run it, you will encounter an error. That's because when we save the scripts, the operating system sees them no different from any other text file. They are not "executable". To understand that, we will have to understand the Unix permission system.
+Now that we have some scripts, we need to be able to run them as commands. However, if you try to run it, you will encounter an error. That's because when we save the scripts, the operating system sees them as no different from any other text file. They are not "executable". To understand that, we will need to understand the permission system.
 
-The best way to explain that is to take a look at the output of the `ls -l` command
+The best way to explain that is to take a look at the output of the `ls -l` command:
 
 ```
 ls -l top_ten
@@ -444,11 +444,11 @@ ls -l combine_data
 ```
 ![Permissions](./images/permissions.jpg)
 
-You will typically find a 10-character string at the beginning of each line, which represent the permission setting for the corresponding file. Here is how to read this string:
-1. The first position of the string tells us whether the item is a directory or a file. If it is a file, we use a placeholder character hyphen `-`, and if it is a directory, we use the letter `d`.
-2. The next 3 positions represent the permission for the **owner** of the file. There are 3 permissions, as represented by the 3 positions. The first is whether the owner can **read** the file. It is denoted by `r` if yes, and by the placeholder character hyphen `-` if not. The second is whether the owner can **write** to the file. It is denoted by `w` if yes, and by the placeholder character hyphen `-` if not. The third is whether the owner can **execute** the file. And you guessed it, it is denoted by `x` if yes, and by the placeholder character hyphen `-` if not.
-3. The next 3 positions has the same function, but they are for a specific **group** of users. This can be useful if you want users who belong to a specific group to be able to do things to the file or directory. A common example is the `admin` group.
-4. The next 3 positions also has the same function, but they are for anyone on the system.
+You will typically find a 10-character string at the beginning of each line, which represents the permission settings for the corresponding file. Here is how to read this string:
+1. The first character of the string tells us whether the item is a directory or a file. If it is a file, we use a placeholder character hyphen `-`, and if it is a directory, we use the letter `d`.
+2. The next 3 characters represent the permissions for the **owner** of the file. There are 3 permissions, as represented by the 3 characters. The first indicates whether the owner can **read** the file. It is denoted by `r` if yes, and by the placeholder character hyphen `-` if not. The second character indicates whether the owner can **write** to the file. It is denoted by `w` if yes, and by the placeholder character hyphen `-` if not. The third character indicates whether the owner can **execute** the file. And you guessed it, it is denoted by `x` if yes, and by the placeholder character hyphen `-` if not.
+3. The next 3 characters mean the same thing, but they are for a specific **group** of users. This can be useful if you want users who belong to a specific group to be able to have the same permissions on the file or directory. A common example is the `admin` group.
+4. The last 3 characters also mean the same thing, but they are for anyone on the system.
 
 You can see that our newly created files are not executable by anyone! Let's fix that. You will need the **change mode** command `chmod`:
 ```
@@ -457,7 +457,7 @@ chmod u+x combine_data # Only make it executable for the owner
 chmod g+x combine_data # Only make it executable for the group
 ```
 
-This is fine, but if you read the instructions of Unix-based programs, you will often encounter `chmod` used with numbers, which are known as the **Octal Representation of File Permissions**:
+This is fine, but if you read the instructions of some programs, you will often encounter `chmod` used with numbers, which are known as the **Octal Representation of File Permissions**:
 
 ![Octal](./images/octal.jpg)
 
@@ -469,7 +469,7 @@ chmod 600 top_ten
 ```
 Can you figure out what each of these commands does?
 
-All these commands assume that you have sufficient permission to make changes to the permission setting of the file. What if you do not have sufficient permissions to do that? Well, the owner of the file or anyone with sufficient permissions will need to give you permission. Or if you are an administrator of the system, you are one of the **sudoers** who can temporarily become the **root** user, which have the ultimate permission to do everything on the system. It's a lot of power, and a lot of responsibility. Typically the command looks like this:
+All these commands assume that you have sufficient permission to make changes to the permission setting of the file. What if you do not have sufficient permission to do that? Well, the owner of the file or anyone with sufficient permission will need to give you permission. If you are an administrator of the system, you are one of the **sudoers**, who can temporarily become the **root** user, which have the ultimate permission to do anything on the system. It's a lot of power, and a lot of responsibility. Typically the command looks like this:
 ```
 sudo command_name [options] [parameters]
 ```
@@ -484,7 +484,7 @@ OK, now that we have made our scripts executable, we can run them!
 ./combine_data
 ```
 
-You will notice that I prefix the commands with `./`, which instructs the shell to look for the program in the current directory. This is the convention and best practice for running your own scripts, because if you don't specificy a specific path, the shell will first look for a command at the system level by that name. It is not only not efficient, but also could be dangerous. There are thousands of system commands, and one of them happen to have the same name as your script, you could be running that command instead.
+You will notice that we prefix the commands with `./`, which instructs the shell to look for the program in the present working directory. This is the convention and best practice for running your own scripts, because if you don't specificy a specific path, the shell will first look for a command at the system level by that name. It is not only inefficient, but also could be dangerous. There are thousands of system commands, and if one of them happens to have the same name as your script, you could be running that command instead.
 
 <br/>
 
