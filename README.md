@@ -481,9 +481,9 @@ chmod 600 top_ten
 Can you figure out what each of these commands does?
 
 > [!TIP]
-> **SUDOER and the Root User**
+> **Sudoer and the Root User**
 > 
-> Using `chmod` assumes that you have sufficient permission to make changes to the permission setting of the file or directory. What if you do not have sufficient permission to do that? In that case, the owner of the file or anyone with sufficient permission will need to give you permission. If you are an administrator of the system, you are one of the **sudoers**, who can temporarily become the **root** user, who has the ultimate permission to do anything on the system. It's a lot of power and a lot of responsibility. To run a command as a sudoer:
+> Using `chmod` assumes that you have sufficient permission to make changes to the permission setting of the file or directory. What if you do not have sufficient permission to do that? In that case, the owner of the file or anyone with sufficient permission will need to give you permission. If you are an administrator of the system, you are one of the **sudoers**, who can temporarily become the **root** user, who has the ultimate permission to do anything on the system. It's a lot of power and a lot of responsibility. To run a command as a sudoer, we prefix our command with `sudo`:
 > 
 > ```
 > sudo command_name [options] [parameters]
