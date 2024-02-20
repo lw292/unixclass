@@ -400,7 +400,7 @@ cat shakespeare.txt | tr -sc [:alpha:] '\n' | sort -f | uniq -ci | sort -bnfr > 
 ```
 
 ```
-tail -n +2 covid.csv | sort -r | cut -d , -f 2,3,4,5 > results-covid.txt
+tail -n +2 covid.csv | sort -r | cut -d , -f 2,3,4,5 > results-covid.csv
 ```
 
 Now that we know what these commands do, let's put them in a file so that we never have to type in such long commands again! You can use `nano`, or your favorite text editors, to create these script files.
