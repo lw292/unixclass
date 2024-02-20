@@ -60,7 +60,7 @@ ls [/path/to/directory]
 ```
 
 > [!TIP]
-> **The Anatomy of a Command**.
+> **The Anatomy of a Command**
 > 
 > In addition to options or flags, most of the time we also need to pass **parameters** to a command. The syntax of a command therefore looks like this:
 > ```
@@ -88,7 +88,7 @@ ls [/path/to/directory]
 > ```
 
 > [!TIP]
-> **Special Characters**.
+> **Special Characters**
 > 
 > **Forward slash** `/` denotes the root directory at the beginning of a path, and is the element delimiter in the middle of a path:
 > ```
@@ -106,7 +106,7 @@ ls [/path/to/directory]
 > Sometimes you may also encounter the **tilde** character `~`, which in most Unix systems denote the user's "home directory".
 
 > [!TIP]
-> **Convenience Features in the Bash Shell**.
+> **Convenience Features in the Bash Shell**
 > 
 > It can be tedious to always type in paths character by character, so there is a must-know convenience feature in the Bash shell (and many other shells). As you type path elements, pressing the **TAB** key will prompt the shell to attempt to auto-complete the path element.
 > 
@@ -192,7 +192,7 @@ rm -R data/sample_5
 > Unlike in Windows or macOS, the Unix command line assumes that you know what you are doing. It DOES NOT ask you for confirmation when deleting or overwriting files or directories. Therefore when using commands like `cp`, `mv`, and `rm`, you should measure twice and cut once, and make sure you do not accidentally erase an existing file with the same name or delete a file with a similar name. There is no "trash can" or "recycle bin" for these commands.
 
 > [!TIP]
-> **Special Characters**.
+> **Special Characters**
 > 
 > The **question mark** `?` is a wildcard character that denotes one character when specifying file names:
 > ```
