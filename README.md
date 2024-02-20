@@ -20,7 +20,7 @@ uname
 ```
 
 > [!TIP]
-> **The Anatomy of a Command**.
+> **The Anatomy of a Command**
 > 
 > We can pass **options** (sometimes known as **flags**) to a command. The syntax usually looks like this:
 > ```
