@@ -103,7 +103,9 @@ ls [/path/to/directory]
 > [!TIP]
 > **Convenience Features in the Bash Shell**. 
 > It can be tedious to always type in paths character by character, so there is a must-know convenience feature in the Bash shell (and many other shells). As you type path elements, pressing the **TAB** key will prompt the shell to attempt to auto-complete the path element.
+> 
 > If you want to re-run a command you ran before, use the **ARROW** keys to cycle through your command history.
+> 
 > If your terminal becomes too busy with command output, and you just want to start from a clean slate, use the `clear` command.
 
 To **change directory**, run:
