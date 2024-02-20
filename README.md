@@ -21,6 +21,7 @@ uname
 
 > [!TIP]
 > **The Anatomy of a Command**.
+> 
 > We can pass **options** (sometimes known as **flags**) to a command. The syntax usually looks like this:
 > ```
 > command_name [options]
@@ -59,7 +60,8 @@ ls [/path/to/directory]
 ```
 
 > [!TIP]
-> **The Anatomy of a Command**. 
+> **The Anatomy of a Command**.
+> 
 > In addition to options or flags, most of the time we also need to pass **parameters** to a command. The syntax of a command therefore looks like this:
 > ```
 > command_name [options] [parameters]
@@ -86,22 +88,26 @@ ls [/path/to/directory]
 > ```
 
 > [!TIP]
-> **Special Characters**. 
+> **Special Characters**.
+> 
 > **Forward slash** `/` denotes the root directory at the beginning of a path, and is the element delimiter in the middle of a path:
 > ```
 > / # Root directory
 > data/my_file.txt # Delimits the directory name "data" from the file name "my_file.txt"
 > /workspace/unixclass/data/my_file.txt # The first slash denotes the root directory, and the subsequent ones delimit path elements
 > ```
+> 
 > A **single dot** `.` represents the present working directory, and **double dots** `..` represent the parent directory of the present working directory. Assume we are currently in `/workspace/unixclass/data/sample`:
 > ```
 > ./my_file.txt # => my_file.txt => /workspace/unixclass/data/sample/my_file.txt
 > ../my_file.txt # => /workspace/unixclass/data/my_file.txt
 > ```
+> 
 > Sometimes you may also encounter the **tilde** character `~`, which in most Unix systems denote the user's "home directory".
 
 > [!TIP]
-> **Convenience Features in the Bash Shell**. 
+> **Convenience Features in the Bash Shell**.
+> 
 > It can be tedious to always type in paths character by character, so there is a must-know convenience feature in the Bash shell (and many other shells). As you type path elements, pressing the **TAB** key will prompt the shell to attempt to auto-complete the path element.
 > 
 > If you want to re-run a command you ran before, use the **ARROW** keys to cycle through your command history.
@@ -186,12 +192,13 @@ rm -R data/sample_5
 > Unlike in Windows or macOS, the Unix command line assumes that you know what you are doing. It DOES NOT ask you for confirmation when deleting or overwriting files or directories. Therefore when using commands like `cp`, `mv`, and `rm`, you should measure twice and cut once, and make sure you do not accidentally erase an existing file with the same name or delete a file with a similar name. There is no "trash can" or "recycle bin" for these commands.
 
 > [!TIP]
-> **Special Characters**. 
+> **Special Characters**.
+> 
 > The **question mark** `?` is a wildcard character that denotes one character when specifying file names:
 > ```
 > cp data/sample/my_file_?.txt data/sample_1/ # => my_file_1.txt, my_file_2.txt, ...
 > ```
-> The **asterisk** `*` is a wildcard character that denotes any number of characters when specifying file names:
+> The **asterisk** `*` is a wildcard character that denotes any number of characters (including 0) when specifying file names:
 > ```
 > cp data/sample/*.txt data/sample_1/ # => my_file.txt, another_file.txt, yet_another_file.txt, ...
 > ```
