@@ -211,7 +211,7 @@ nano sample/my_file.txt
 > At the bottom of the `nano` screen, you will find a list of keyboard shortcuts to help you with common tasks. Most importantly, press `Ctrl+O` to save (write out) the file, and press `Ctrl+X` to exit the nano program.
 
 > [!TIP]
-> You system may have other text editors installed, such as `vi`, `vim`, etc. They all have their own keyboard shortcuts.
+> You system may have other text editors installed, such as `vi`, `vim`, `emacs` etc. They all have their own keyboard shortcuts.
 
 > [!TIP]
 > To see if a command or program is available on your system, run:
@@ -271,17 +271,19 @@ For example:
 cat shakespeare.txt
 ```
 
-We just "read" the complete works of Shakespeare in 5 seconds, but that's not helpful! Now let's try to read them page by page using the `more` command:
+We just "read" the complete works of Shakespeare in 5 seconds, but that's not helpful! Now let's try to read them page by page using the `more` or `less` command:
 ```
 more [/path/to/file]
+less [/path/to/file]
 ```
 For example:
 ```
 more shakespeare.txt
+less shakespeare.txt
 ```
 
 > [!TIP]
-> With `more`, you can use the spacebar to **scroll** pages and type in `q` to **quit** the interface.
+> With `more` or `less`, you can use the spacebar to **scroll** pages and type in `q` to **quit** the interface.
 
 For large tabular data files, we might just want to look at the **first a few rows** to get a sense of the data. We can use the `head` command to achieve that:
 ```
@@ -353,7 +355,7 @@ command_name [options] [parameters] >> /path/to/file
 For example:
 ```
 echo 'Hello world!' > hello.txt
-echo ' So happy to be here!' >> hello.txt
+echo 'So happy to be here!' >> hello.txt
 ```
 
 The **single chevron** `>` replaces the existing content of the target file with the output of the command. This can make sense in a lot of situations, but you have to be extra careful not overwriting any file that you don't intend to overwrite. Again, the terminal usually does not ask you for confirmation.
@@ -389,14 +391,14 @@ cat shakespeare.txt | tr -sc [:alpha:] '\n' | sort -f | uniq -ci | sort -bnfr > 
 ```
 
 ```
-head -n 101 covid.csv | tail -n 100 | sort -r | cut -d , -f 2,3,4,5 > results-covid.txt
+tail -n +2 covid.csv | sort -r | cut -d , -f 2,3,4,5 > results-covid.txt
 ```
 
 Now that we know what these commands do, let's put them in a file so that we never have to type in such long commands again! You can use `nano`, or your favorite text editors, to create these script files.
 
 Let's create a script file called `top_ten`:
 ```
-#! /bin/bash
+#!/bin/bash
 
 date
 
@@ -410,9 +412,9 @@ head results-${file}
 date
 ```
 
-Additionally, let's create another script file called `combine_data`
+Additionally, let's create another script file called `select_combine`
 ```
-#! /bin/bash
+#!/bin/bash
 
 date
 
@@ -420,12 +422,12 @@ COUNTER=0
 
 for datafile in covid*.csv
 do
-	echo "Adding $datafile …"
-	tail -n +2 $datafile | sort -r | cut -d , -f 2,3,4,5 >> combined-covid.csv
+	echo "Selecting columns from $datafile and adding them …"
+	tail -n +2 $datafile | sort -r | cut -d , -f 2,3,4,5 >> results-covid.csv
 	COUNTER=$((COUNTER + 1))
 done
 
-echo "All set. $COUNTER files were added."
+echo "All set. $COUNTER files were processed. File results-covid.csv was generated."
 
 date
 ```
@@ -440,7 +442,7 @@ The best way to explain that is to take a look at the output of the `ls -l` comm
 
 ```
 ls -l top_ten
-ls -l combine_data
+ls -l select_combine
 ```
 ![Permissions](./images/permissions.jpg)
 
@@ -453,8 +455,8 @@ You will typically find a 10-character string at the beginning of each line, whi
 You can see that our newly created files are not executable by anyone! Let's fix that. You will need the **change mode** command `chmod`:
 ```
 chmod +x top_ten # make it generally executable
-chmod u+x combine_data # Only make it executable for the owner
-chmod g+x combine_data # Only make it executable for the group
+chmod u+x select_combine # Only make it executable for the owner
+chmod g+x select_combine # Only make it executable for the group
 ```
 
 This is fine, but if you read the instructions of some programs, you will often encounter `chmod` used with numbers, which are known as the **Octal Representation of File Permissions**:
@@ -481,7 +483,7 @@ sudo command_name [options] [parameters]
 OK, now that we have made our scripts executable, we can run them!
 ```
 ./top_ten
-./combine_data
+./select_combine
 ```
 
 You will notice that we prefix the commands with `./`, which instructs the shell to look for the program in the present working directory. This is the convention and best practice for running your own scripts, because if you don't specificy a specific path, the shell will first look for a command at the system level by that name. It is not only inefficient, but also could be dangerous. There are thousands of system commands, and if one of them happens to have the same name as your script, you could be running that command instead.
